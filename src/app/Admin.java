@@ -358,6 +358,14 @@ public class Admin {
                     }
                 }
 
+                for(User user : users){
+                    if( user.getSearchBar().getLastSearchType() != null &&
+                            user.getSearchBar().getLastSearchType().equals("artist") &&
+                            user.getSearchBar().getLastSelectedUser().getName().equals(artist.getUsername())){
+                        return username + " can't be deleted.";
+                    }
+                }
+
                 List<Album> artistAlbums = artist.getAlbums();
                 for (User user : users){
                     if(user.getUserType().equals("normalUser")){
@@ -374,6 +382,37 @@ public class Admin {
                 }
                 users.remove(deleteUser);
 
+                return username + " was successfully deleted.";
+            }
+
+            if (deleteUser.getUserType().equals("host")){
+                Host host = (Host) deleteUser;
+
+                for(User user : users){
+                    Podcast sourcePodcast = new Podcast("","",null);
+                    if(user.getPlayer().getSource() != null){
+                        sourcePodcast = (Podcast) user.getPlayer().getSource().getAudioCollection();
+                    }
+                    for(Podcast podcast : host.getPodcasts()) {
+                        if(podcast.getName().equals(sourcePodcast.getName())){
+                            return username + " can't be deleted.";
+                        }
+                    }
+                }
+
+                for(User user : users){
+                    if( user.getSearchBar().getLastSearchType() != null &&
+                            user.getSearchBar().getLastSearchType().equals("host") &&
+                            user.getSearchBar().getLastSelectedUser().getName().equals(host.getUsername())){
+                            return username + " can't be deleted.";
+                    }
+                }
+
+                for(Podcast podcast : host.getPodcasts()){
+                    deletePodcast(podcast);
+                }
+
+                users.remove(deleteUser);
                 return username + " was successfully deleted.";
             }
         }

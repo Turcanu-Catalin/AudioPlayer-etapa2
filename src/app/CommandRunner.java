@@ -624,7 +624,7 @@ public class CommandRunner {
                 String message = artist.removeAlbum(name);
                 objectNode.put("message", message);
             } else {
-                objectNode.put("message",  commandInput.getUsername() + " is not a host.");
+                objectNode.put("message",  commandInput.getUsername() + " is not a artist.");
             }
         } else {
             objectNode.put("message", "The username " + commandInput.getUsername() + " doesn't exist.");
@@ -644,6 +644,32 @@ public class CommandRunner {
         objectNode.put("message", message);
 
         return objectNode;
+    }
+
+    public static ObjectNode removePodcast(CommandInput commandInput){
+        User user = Admin.getUser(commandInput.getUsername());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("user", commandInput.getUsername());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+
+        if(user != null){
+            if (user.getUserType().equals("host")){
+                Host host = (Host) user;
+                String name = commandInput.getName();
+
+                String message = host.removePodcast(name);
+                objectNode.put("message", message);
+            } else {
+                objectNode.put("message",  commandInput.getUsername() + " is not a host.");
+            }
+        } else {
+            objectNode.put("message", "The username " + commandInput.getUsername() + " doesn't exist.");
+        }
+
+        return objectNode;
+
     }
 
 }

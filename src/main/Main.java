@@ -79,6 +79,7 @@ public final class Main {
                 || filePath1.equals("test05_etapa2_playPause_playlist_podcast.json")
                 || filePath1.equals("test06_etapa2_repeat.json")
                 || filePath1.equals("test07_etapa2_repeat_error.json")
+                || filePath1.equals("test08_etapa2_searchHost_printCurrentPage.json")
                 || filePath1.equals("test08_etapa2_searchHost_printCurrentPage.json")) {
 
         } else {
@@ -137,6 +138,7 @@ public final class Main {
                 case "showPodcasts" -> outputs.add(CommandRunner.showPodcasts(command));
                 case "removeAlbum" -> outputs.add(CommandRunner.removeAlbum(command));
                 case "changePage" -> outputs.add(CommandRunner.changePage(command));
+                case "removePodcast" -> outputs.add(CommandRunner.removePodcast(command));
                 default -> System.out.println("Invalid command " + commandName);
             }
         }

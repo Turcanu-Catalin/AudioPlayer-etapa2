@@ -80,29 +80,29 @@ public class Host extends User{
         return getUsername() + " has no announcement with the given name.";
     }
 
-//    public String removePodcast(String name){
-//        Podcast podcast = getPodcast(name);
-//        if(hasPodcast(name)){
-//            List<User> users = Admin.getUsers();
-//            for(User user : users){
-//                Podcast sourcePodcast = new Podcast("","",null);
-//                if(user.getPlayer().getSource() != null){
-//                    sourcePodcast = (Podcast) user.getPlayer().getSource().getAudioCollection();
-//                }
-//                if(sourcePodcast.getName().equals(name)){
-//                    return getUsername() + " can't delete this podcast.";
-//                }
-//            }
-//
-//            podcasts.remove(podcast);
-//            Admin.deletePodcast(podcast);
-//
-//
-//        } else {
-//
-//        }
-//
-//    }
+    public String removePodcast(String name){
+        Podcast podcast = getPodcast(name);
+        if(hasPodcast(name)){
+            List<User> users = Admin.getUsers();
+            for(User user : users){
+                Podcast sourcePodcast = new Podcast("","",null);
+                if(user.getPlayer().getSource() != null){
+                    sourcePodcast = (Podcast) user.getPlayer().getSource().getAudioCollection();
+                }
+                if(sourcePodcast.getName().equals(name)){
+                    return getUsername() + " can't delete this podcast.";
+                }
+            }
+
+            podcasts.remove(podcast);
+            Admin.deletePodcast(podcast);
+            return getUsername() + " deleted the podcast successfully.";
+
+        } else {
+            return getUsername() + " doesn't have a podcast with the given name.";
+        }
+
+    }
 
     public boolean hasAnnouncement(String name){
         for(Announcement announcement : announcements){
