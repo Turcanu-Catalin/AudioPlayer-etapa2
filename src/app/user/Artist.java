@@ -31,10 +31,19 @@ public class Artist extends User {
         this.setUserType("artist");
     }
 
-    public  Album getAlbum(String name) {
+    public Album getAlbum(String name) {
         for (Album album : albums) {
             if (album.getName().equals(name)) {
                 return album;
+            }
+        }
+        return null;
+    }
+
+    public Event getEvent(String name){
+        for(Event event : events){
+            if(event.getName().equals(name)){
+                return event;
             }
         }
         return null;
@@ -96,10 +105,15 @@ public class Artist extends User {
             List<User> users = Admin.getUsers();
             for(User user : users){
                 Album sourceAlbum = new Album(",", 0, "", null, "");
-                if (user.getPlayer().getSource() != null) {
+                if (user.getPlayer().getSource() != null && user.getPlayer().getSource().getAudioCollection().isAlbum()) {
                     sourceAlbum = (Album) user.getPlayer().getSource().getAudioCollection();
                 }
                 if(sourceAlbum.getName().equals(name)){
+                    return getUsername() + " can't delete this album.";
+                }
+                if( user.getSearchBar().getLastSearchType() != null &&
+                        user.getSearchBar().getLastSearchType().equals("artist") &&
+                        user.getSearchBar().getLastSelectedUser().getName().equals(getUsername())){
                     return getUsername() + " can't delete this album.";
                 }
             }
@@ -110,6 +124,16 @@ public class Artist extends User {
 
         } else {
             return getUsername() + " doesn't have an album with the given name.";
+        }
+    }
+
+    public String removeEvent(String name){
+        Event event = getEvent(name);
+        if(hasEvent(name)){
+            events.remove(event);
+            return getUsername() + " deleted the event successfully.";
+        } else {
+            return getUsername() + " doesn't have an event with the given name.";
         }
     }
 

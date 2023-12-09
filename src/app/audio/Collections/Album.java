@@ -76,6 +76,9 @@ public class Album extends AudioCollection{
         return this.getAlbumOwner().equals(user);
     }
 
+    @Override
+    public boolean isAlbum(){return true;}
+
 
 
 }

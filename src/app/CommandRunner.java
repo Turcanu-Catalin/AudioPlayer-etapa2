@@ -672,4 +672,29 @@ public class CommandRunner {
 
     }
 
+    public static ObjectNode removeEvent(CommandInput commandInput){
+        User user = Admin.getUser(commandInput.getUsername());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("user", commandInput.getUsername());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+
+        if(user != null){
+            if (user.getUserType().equals("artist")){
+                Artist artist = (Artist) user;
+                String name = commandInput.getName();
+
+                String message = artist.removeEvent(name);
+                objectNode.put("message", message);
+            } else {
+                objectNode.put("message",  commandInput.getUsername() + " is not a artist.");
+            }
+        } else {
+            objectNode.put("message", "The username " + commandInput.getUsername() + " doesn't exist.");
+        }
+
+        return objectNode;
+    }
+
 }
