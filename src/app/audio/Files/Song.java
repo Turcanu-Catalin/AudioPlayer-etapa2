@@ -95,4 +95,6 @@ public final class Song extends AudioFile {
     public void dislike() {
         likes--;
     }
+    @Override
+    public boolean isSong(){return true;}
 }

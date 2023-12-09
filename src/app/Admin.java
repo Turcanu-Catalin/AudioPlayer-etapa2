@@ -334,7 +334,7 @@ public class Admin {
 
                 for(User user : users) {
                     Song sourceSong = new Song();
-                    if (user.getPlayer().getSource() != null) {
+                    if (user.getPlayer().getSource() != null && user.getPlayer().getSource().getAudioFile().isSong()) {
                         sourceSong = (Song) user.getPlayer().getSource().getAudioFile();
                     }
                     for (Album album : getAlbums()) {
@@ -390,7 +390,7 @@ public class Admin {
 
                 for(User user : users){
                     Podcast sourcePodcast = new Podcast("","",null);
-                    if(user.getPlayer().getSource() != null){
+                    if(user.getPlayer().getSource() != null && user.getPlayer().getSource().getAudioCollection().isPodcast()){
                         sourcePodcast = (Podcast) user.getPlayer().getSource().getAudioCollection();
                     }
                     for(Podcast podcast : host.getPodcasts()) {

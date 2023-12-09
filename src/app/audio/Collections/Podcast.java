@@ -26,4 +26,7 @@ public final class Podcast extends AudioCollection {
     public AudioFile getTrackByIndex(int index) {
         return episodes.get(index);
     }
+
+    @Override
+    public boolean isPodcast(){return true;}
 }

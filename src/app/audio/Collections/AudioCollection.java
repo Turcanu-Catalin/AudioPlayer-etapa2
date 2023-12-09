@@ -23,4 +23,5 @@ public abstract class AudioCollection extends LibraryEntry {
     }
 
     public boolean isAlbum(){return false;}
+    public boolean isPodcast(){return false;}
 }
