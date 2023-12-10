@@ -84,7 +84,9 @@ public final class Main {
 //                || filePath1.equals("test10_etapa2_next_prev_forward_backward.json")
 //                || filePath1.equals("test11_etapa2_shuffle_error.json")
 //                || filePath1.equals("test12_etapa2_next_prev_forward_backward_error.json")
-//                || filePath1.equals("test13_statistics.json")) {
+//                || filePath1.equals("test13_statistics.json")
+//                || filePath1.equals("test14_etapa2_delete_cases.json")
+//                || filePath1.equals("test15_etapa2_complex.json")) {
 //
 //        } else {
 //            return;
@@ -144,6 +146,9 @@ public final class Main {
                 case "changePage" -> outputs.add(CommandRunner.changePage(command));
                 case "removePodcast" -> outputs.add(CommandRunner.removePodcast(command));
                 case "removeEvent" -> outputs.add(CommandRunner.removeEvent(command));
+                case "getTop5Albums" -> outputs.add(CommandRunner.getTop5Albums(command));
+                case "getTop5Artists" -> outputs.add(CommandRunner.getTop5Artists(command));
+
                 default -> System.out.println("Invalid command " + commandName);
             }
         }

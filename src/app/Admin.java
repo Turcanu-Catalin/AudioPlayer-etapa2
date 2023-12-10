@@ -161,7 +161,7 @@ public class Admin {
         List<Playlist> playists = new ArrayList<>();
 
         for (User user : users) {
-            if(user.getUserType().equals("normalUser")) {
+            if(user.getUserType().equals("user")) {
                 List<Playlist> userPlaylists = user.getPlaylists();
                 playists.addAll(userPlaylists);
             }
@@ -178,7 +178,7 @@ public class Admin {
         }
 
         for (User user : users) {
-            if (user.getUserType().equals("normalUser")) {
+            if (user.getUserType().equals("user")) {
                 user.simulateTime(elapsed);
             }
         }
@@ -283,9 +283,8 @@ public class Admin {
             String username = user.getUsername();
             if (user.getUserType().equals("artist")) {
                 artists.add(username);
-//            } else if (user instanceof Artist) {
-//                hosts.add(username);
-//            }
+            } else if (user.getUserType().equals("host")){
+                hosts.add(username);
         } else {
                 normalUsers.add(username);
             }
@@ -295,7 +294,7 @@ public class Admin {
         List<String> result = new ArrayList<>();
         result.addAll(normalUsers);
         result.addAll(artists);
-//        result.addAll(hosts);
+        result.addAll(hosts);
 
         return result;
     }
@@ -303,9 +302,33 @@ public class Admin {
     public static String deleteUser(String username) {
         User deleteUser = getUser(username);
         if (deleteUser != null) {
-            if (deleteUser.getUserType().equals("normalUser")) {
+            if (deleteUser.getUserType().equals("user")) {
 
                 List<Playlist> userPlaylists = deleteUser.getPlaylists();
+
+                for(User user : users){
+                    Playlist sourcePlaylist = new Playlist("","");
+                    if(user.getPlayer().getSource() != null
+                            && user.getPlayer().getSource().getAudioCollection() != null
+                            && user.getPlayer().getSource().getAudioCollection().isPlaylist()){
+
+                        sourcePlaylist = (Playlist) user.getPlayer().getSource().getAudioCollection();
+                    }
+                    for(Playlist playlist : userPlaylists) {
+                        if( sourcePlaylist != null && playlist.getName().equals(sourcePlaylist.getName())){
+                            return username + " can't be deleted.";
+                        }
+                    }
+                }
+
+//                for(User user : users){
+//                    for(Playlist playlist : userPlaylists){
+//                        if(user.getFollowedPlaylists().contains(playlist)){
+//                            return username + " can't be deleted.";
+//                        }
+//                    }
+//                }
+
                 List<Playlist> allPlaylists = getAllPlaylists();
                 allPlaylists.removeAll(userPlaylists);
 
@@ -331,7 +354,6 @@ public class Admin {
             if (deleteUser.getUserType().equals("artist")) {
                 Artist artist = (Artist) deleteUser;
 
-
                 for(User user : users) {
                     Song sourceSong = new Song();
                     if (user.getPlayer().getSource() != null && user.getPlayer().getSource().getAudioFile().isSong()) {
@@ -348,7 +370,7 @@ public class Admin {
 
                 for(User user : users) {
                     Album sourceAlbum = new Album(",", 0, "", null, "");
-                    if (user.getPlayer().getSource() != null) {
+                    if (user.getPlayer().getSource() != null && user.getPlayer().getSource().getAudioCollection().isAlbum()) {
                         sourceAlbum = (Album) user.getPlayer().getSource().getAudioCollection();
                     }
                     for (Album album : getAlbums()) {
@@ -358,17 +380,22 @@ public class Admin {
                     }
                 }
 
+//                for(User user : users){
+//                    if( user.getSearchBar().getLastSearchType() != null &&
+//                            user.getSearchBar().getLastSearchType().equals("artist")){
+//                        return username + " can't be deleted.";
+//                    }
+//                }
+
                 for(User user : users){
-                    if( user.getSearchBar().getLastSearchType() != null &&
-                            user.getSearchBar().getLastSearchType().equals("artist") &&
-                            user.getSearchBar().getLastSelectedUser().getName().equals(artist.getUsername())){
+                    if(user.getCurrentPage().equals(artist.getUsername())){
                         return username + " can't be deleted.";
                     }
                 }
 
                 List<Album> artistAlbums = artist.getAlbums();
                 for (User user : users){
-                    if(user.getUserType().equals("normalUser")){
+                    if(user.getUserType().equals("user")){
                         for (Album album : artistAlbums){
                             for(Song song : album.getSongs()){
                                 user.deleteLikedSong(song);
@@ -400,11 +427,16 @@ public class Admin {
                     }
                 }
 
+//                for(User user : users){
+//                    if( user.getSearchBar().getLastSearchType() != null &&
+//                            user.getSearchBar().getLastSearchType().equals("host")){
+//                            return username + " can't be deleted.";
+//                    }
+//                }
+
                 for(User user : users){
-                    if( user.getSearchBar().getLastSearchType() != null &&
-                            user.getSearchBar().getLastSearchType().equals("host") &&
-                            user.getSearchBar().getLastSelectedUser().getName().equals(host.getUsername())){
-                            return username + " can't be deleted.";
+                    if(user.getCurrentPage().equals(host.getUsername())){
+                        return username + " can't be deleted.";
                     }
                 }
 
@@ -500,5 +532,55 @@ public class Admin {
             episodes.add(episode);
         }
         return episodes;
+    }
+
+    public static List<String> getTop5Albums() {
+        List<Album> sortedAlbums = new ArrayList<>(getAlbums());
+
+        sortedAlbums.sort(Comparator.comparingInt(Admin::getTotalLikesInAlbum)
+                .reversed()
+                .thenComparing(Album::getName));
+
+        List<String> topAlbums = new ArrayList<>();
+        int count = 0;
+        for (Album album : sortedAlbums) {
+            if (count >= 5) break;
+            topAlbums.add(album.getName());
+            count++;
+        }
+        return topAlbums;
+    }
+
+    public static List<String> getTop5Artists(){
+        List<Artist> sortedArtists = new ArrayList<>(getArtists());
+        sortedArtists.sort(Comparator.comparingInt(Admin::getTotalArtistLikes)
+                .reversed()
+                .thenComparing(Artist::getUsername, Comparator.naturalOrder()));
+        List<String> topArtists = new ArrayList<>();
+        int count = 0;
+        for (Artist artist : sortedArtists) {
+            if (count >= 5) break;
+            topArtists.add(artist.getUsername());
+            count++;
+        }
+        return topArtists;
+    }
+
+    public static int getTotalLikesInAlbum(Album album) {
+        return album.getSongs().stream().mapToInt(Song::getLikes).sum();
+    }
+
+    public static int getTotalArtistLikes(Artist artist){
+        return artist.getAlbums().stream().mapToInt(Admin::getTotalLikesInAlbum).sum();
+    }
+
+    public static List<Artist> getArtists(){
+        ArrayList<Artist> artists = new ArrayList<>();
+        for(User user : users){
+            if(user.getUserType().equals("artist")){
+                artists.add((Artist) user);
+            }
+        }
+        return artists;
     }
 }

@@ -46,8 +46,10 @@ public class User {
     private final SearchBar searchBar;
     private boolean lastSearched;
     private boolean isOnline = true;
-    @Getter
+    @Getter @Setter
     private String pageType;
+    @Getter @Setter
+    private String currentPage;
 
     public User(String username, int age, String city) {
         this.username = username;
@@ -59,8 +61,9 @@ public class User {
         player = new Player();
         searchBar = new SearchBar(username);
         lastSearched = false;
-        this.userType = "normalUser";
+        this.userType = "user";
         this.pageType = "Home";
+        this.currentPage = "";
     }
 
 
@@ -90,10 +93,12 @@ public class User {
             return "The selected ID is too high.";
 
         if (selected.isArtistEntry()){
+            setCurrentPage(selected.getName());
             return "Successfully selected %s's page.".formatted(selected.getName());
         }
 
         if (selected.isHostEntry()){
+            setCurrentPage(selected.getName());
             return "Successfully selected %s's page.".formatted(selected.getName());
         }
 
@@ -188,7 +193,7 @@ public class User {
         if (player.getCurrentAudioFile() == null)
             return "Please load a source before liking or unliking.";
 
-        if (!player.getType().equals("song") && !player.getType().equals("playlist"))
+        if (!player.getType().equals("song") && !player.getType().equals("playlist") && !player.getType().equals("album"))
             return "Loaded source is not a song.";
 
         Song song = (Song) player.getCurrentAudioFile();
@@ -345,21 +350,29 @@ public class User {
     }
 
     public String switchConnectionStatus(){
-        if (isOnline) {
-            isOnline = false;
-        } else {
-            isOnline = true;
-        }
+        if(getUserType().equals("user")) {
+            if (isOnline) {
+                isOnline = false;
+            } else {
+                isOnline = true;
+            }
 
-        return getUsername() + " has changed status successfully.";
+            return getUsername() + " has changed status successfully.";
+        } else {
+            return getUsername() + " is not a normal user.";
+        }
     }
 
     public String changePage(String nextPage){
         if(nextPage.equals("Home")){
-            this.pageType = "Home";
+            searchBar.setLastSelectedUser(null);
+            setPageType("Home");
+            setCurrentPage("");
             return getUsername() + " accessed " + nextPage + " successfully.";
         } else if (nextPage.equals("LikedContent")){
-            this.pageType = "LikedContent";
+            searchBar.setLastSelectedUser(null);
+            setPageType("LikedContent");
+            setCurrentPage("");
             return getUsername() + " accessed " + nextPage + " successfully.";
         } else {
             return getUsername() + "  is trying to access a non-existent page.";

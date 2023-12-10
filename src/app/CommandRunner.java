@@ -404,7 +404,7 @@ public class CommandRunner {
                 String message = artist.addAlbum(name, releaseYear, description, songs, owner);
                 objectNode.put("message", message);
             } else {
-                 objectNode.put("message", "The username " + commandInput.getUsername() + " is not an artist.");
+                 objectNode.put("message",  commandInput.getUsername() + " is not an artist.");
             }
         } else {
             objectNode.put("message", "The username " + commandInput.getUsername() + " doesn't exist.");
@@ -429,10 +429,9 @@ public class CommandRunner {
 
     public static ObjectNode printCurrentPage(CommandInput commandInput) {
         User user = Admin.getUser(commandInput.getUsername());
-        Page page = PageFactory.createPage(user);
         String message;
-
-        if (page != null) {
+        if(user.isOnline()) {
+            Page page = PageFactory.createPage(user);
             message = page.printCurrentPage();
         } else {
             message = user.getUsername() + " is offline.";
@@ -624,7 +623,7 @@ public class CommandRunner {
                 String message = artist.removeAlbum(name);
                 objectNode.put("message", message);
             } else {
-                objectNode.put("message",  commandInput.getUsername() + " is not a artist.");
+                objectNode.put("message",  commandInput.getUsername() + " is not an artist.");
             }
         } else {
             objectNode.put("message", "The username " + commandInput.getUsername() + " doesn't exist.");
@@ -695,6 +694,32 @@ public class CommandRunner {
         }
 
         return objectNode;
+    }
+
+    public static ObjectNode getTop5Albums(CommandInput commandInput){
+
+        List<String> topAlbums = Admin.getTop5Albums();
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("result", objectMapper.valueToTree(topAlbums));
+
+        return objectNode;
+
+    }
+
+    public static ObjectNode getTop5Artists(CommandInput commandInput){
+
+        List<String> topArtists = Admin.getTop5Artists();
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("result", objectMapper.valueToTree(topArtists));
+
+        return objectNode;
+
     }
 
 }

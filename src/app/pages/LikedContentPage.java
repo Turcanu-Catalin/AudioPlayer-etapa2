@@ -21,8 +21,6 @@ public class LikedContentPage implements Page {
 
     @Override
     public String printCurrentPage() {
-        sortLikedSongs();
-        sortFollowedPlaylists();
 
         List<String> likedSongsDetails = new ArrayList<>();
         for (Song song : likedSongs) {
@@ -38,18 +36,18 @@ public class LikedContentPage implements Page {
                 "]\n\nFollowed playlists:\n\t[" + String.join(", ", followedPlaylistsDetails) + "]";
     }
 
-    private void sortLikedSongs() {
-        likedSongs.sort(Comparator.comparingInt(Song::getLikes).reversed());
-        likedSongs = new ArrayList<>(likedSongs.subList(0, Math.min(likedSongs.size(), 5)));
-    }
-
-    private void sortFollowedPlaylists() {
-        followedPlaylists.sort(Comparator.comparingInt(this::getTotalLikesInPlaylist).reversed());
-        followedPlaylists = new ArrayList<>(followedPlaylists.subList(0, Math.min(followedPlaylists.size(), 5)));
-    }
-
-    private int getTotalLikesInPlaylist(Playlist playlist) {
-        return playlist.getSongs().stream().mapToInt(Song::getLikes).sum();
-    }
+//    private void sortLikedSongs() {
+//        likedSongs.sort(Comparator.comparingInt(Song::getLikes).reversed());
+//        likedSongs = new ArrayList<>(likedSongs.subList(0, Math.min(likedSongs.size(), 5)));
+//    }
+//
+//    private void sortFollowedPlaylists() {
+//        followedPlaylists.sort(Comparator.comparingInt(this::getTotalLikesInPlaylist).reversed());
+//        followedPlaylists = new ArrayList<>(followedPlaylists.subList(0, Math.min(followedPlaylists.size(), 5)));
+//    }
+//
+//    private int getTotalLikesInPlaylist(Playlist playlist) {
+//        return playlist.getSongs().stream().mapToInt(Song::getLikes).sum();
+//    }
 
 }

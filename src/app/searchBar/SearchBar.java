@@ -4,8 +4,10 @@ package app.searchBar;
 import app.Admin;
 import app.audio.LibraryEntry;
 import app.utils.ArtistsEntry;
+import app.utils.HostEntry;
 import fileio.input.SongInput;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +19,11 @@ public class SearchBar {
     private List<LibraryEntry> results;
     private final String user;
     private static final Integer MAX_RESULTS = 5;
-    @Getter
+    @Getter @Setter
     private String lastSearchType;
     @Getter
     private LibraryEntry lastSelected;
-    @Getter
+    @Getter @Setter
     private LibraryEntry lastSelectedUser;
 
     public SearchBar(String user) {
