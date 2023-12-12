@@ -5,7 +5,6 @@ import app.audio.Files.Song;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class LikedContentPage implements Page {
@@ -14,11 +13,20 @@ public class LikedContentPage implements Page {
     @Getter
     private ArrayList<Playlist> followedPlaylists;
 
-    public LikedContentPage(ArrayList<Song> likedSongs, ArrayList<Playlist> followedPlaylists){
+    public LikedContentPage(final ArrayList<Song> likedSongs,
+                            final ArrayList<Playlist> followedPlaylists) {
         this.likedSongs = likedSongs;
         this.followedPlaylists = followedPlaylists;
     }
 
+    /**
+     * Retrieves a formatted string representation of the
+     * user's liked songs and followed playlists,
+     * displaying the names and artists of the liked songs,
+     * as well as the names and owners of the followed playlists.
+     *
+     * @return A formatted string containing details of liked songs and followed playlists.
+     */
     @Override
     public String printCurrentPage() {
 
@@ -32,22 +40,8 @@ public class LikedContentPage implements Page {
             followedPlaylistsDetails.add(playlist.getName() + " - " + playlist.getOwner());
         }
 
-        return "Liked songs:\n\t[" + String.join(", ", likedSongsDetails) +
-                "]\n\nFollowed playlists:\n\t[" + String.join(", ", followedPlaylistsDetails) + "]";
+        return "Liked songs:\n\t[" + String.join(", ", likedSongsDetails)
+                + "]\n\nFollowed playlists:\n\t["
+                + String.join(", ", followedPlaylistsDetails) + "]";
     }
-
-//    private void sortLikedSongs() {
-//        likedSongs.sort(Comparator.comparingInt(Song::getLikes).reversed());
-//        likedSongs = new ArrayList<>(likedSongs.subList(0, Math.min(likedSongs.size(), 5)));
-//    }
-//
-//    private void sortFollowedPlaylists() {
-//        followedPlaylists.sort(Comparator.comparingInt(this::getTotalLikesInPlaylist).reversed());
-//        followedPlaylists = new ArrayList<>(followedPlaylists.subList(0, Math.min(followedPlaylists.size(), 5)));
-//    }
-//
-//    private int getTotalLikesInPlaylist(Playlist playlist) {
-//        return playlist.getSongs().stream().mapToInt(Song::getLikes).sum();
-//    }
-
 }

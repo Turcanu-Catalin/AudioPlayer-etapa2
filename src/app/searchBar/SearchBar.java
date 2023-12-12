@@ -3,18 +3,26 @@ package app.searchBar;
 
 import app.Admin;
 import app.audio.LibraryEntry;
-import app.utils.ArtistsEntry;
-import app.utils.HostEntry;
-import fileio.input.SongInput;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static app.searchBar.FilterUtils.*;
+import static app.searchBar.FilterUtils.filterByAlbum;
+import static app.searchBar.FilterUtils.filterByArtist;
 import static app.searchBar.FilterUtils.filterByFollowers;
+import static app.searchBar.FilterUtils.filterByGenre;
+import static app.searchBar.FilterUtils.filterByLyrics;
+import static app.searchBar.FilterUtils.filterByName;
+import static app.searchBar.FilterUtils.filterByOwner;
+import static app.searchBar.FilterUtils.filterByPlaylistVisibility;
+import static app.searchBar.FilterUtils.filterByReleaseYear;
+import static app.searchBar.FilterUtils.filterByTags;
 
+/**
+ * The type Search bar.
+ */
 public class SearchBar {
     private List<LibraryEntry> results;
     private final String user;
@@ -26,16 +34,32 @@ public class SearchBar {
     @Getter @Setter
     private LibraryEntry lastSelectedUser;
 
-    public SearchBar(String user) {
+    /**
+     * Instantiates a new Search bar.
+     *
+     * @param user the user
+     */
+    public SearchBar(final String user) {
         this.results = new ArrayList<>();
         this.user = user;
     }
 
+    /**
+     * Clear selection.
+     */
     public void clearSelection() {
         lastSelected = null;
         lastSearchType = null;
     }
-    public List<LibraryEntry> search(Filters filters, String type) {
+
+    /**
+     * Search list.
+     *
+     * @param filters the filters
+     * @param type    the type
+     * @return the list
+     */
+    public List<LibraryEntry> search(final Filters filters, final String type) {
         List<LibraryEntry> entries;
 
         switch (type) {
@@ -104,7 +128,7 @@ public class SearchBar {
             case "artist":
                 entries = new ArrayList<>(Admin.getArtistsEntries());
 
-                if (filters.getName() != null){
+                if (filters.getName() != null) {
                     entries = filterByName(entries, filters.getName());
                 }
 
@@ -124,7 +148,7 @@ public class SearchBar {
             case "host":
                 entries = new ArrayList<>(Admin.getHostEntries());
 
-                if (filters.getName() != null){
+                if (filters.getName() != null) {
                     entries = filterByName(entries, filters.getName());
                 }
 
@@ -142,15 +166,20 @@ public class SearchBar {
         return this.results;
     }
 
-    public LibraryEntry select(Integer itemNumber) {
+    /**
+     * Select library entry.
+     *
+     * @param itemNumber the item number
+     * @return the library entry
+     */
+    public LibraryEntry select(final Integer itemNumber) {
         if (this.results.size() < itemNumber) {
             results.clear();
 
             return null;
-        }
-        else {
+        } else {
             lastSelected =  this.results.get(itemNumber - 1);
-            if (lastSelected.isArtistEntry() || lastSelected.isHostEntry()){
+            if (lastSelected.isArtistEntry() || lastSelected.isHostEntry()) {
                 this.lastSelectedUser = lastSelected;
             }
             results.clear();
@@ -159,6 +188,11 @@ public class SearchBar {
         }
     }
 
+    /**
+     * Retrieves the list of library entries representing the search results.
+     *
+     * @return A List of LibraryEntry objects containing the search results.
+     */
     public List<LibraryEntry> getResults() {
         return results;
     }

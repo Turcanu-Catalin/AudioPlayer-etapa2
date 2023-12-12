@@ -17,98 +17,204 @@ public class FiltersInput {
     public FiltersInput() {
     }
 
+    /**
+     * Gets the name filter.
+     *
+     * @return The name filter.
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    /**
+     * Sets the name filter.
+     *
+     * @param name The new name filter.
+     */
+    public void setName(final String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the album filter.
+     *
+     * @return The album filter.
+     */
     public String getAlbum() {
         return album;
     }
 
-    public void setAlbum(String album) {
+    /**
+     * Sets the album filter.
+     *
+     * @param album The new album filter.
+     */
+    public void setAlbum(final String album) {
         this.album = album;
     }
 
+    /**
+     * Gets the list of tags filter.
+     *
+     * @return The list of tags filter.
+     */
     public ArrayList<String> getTags() {
         return tags;
     }
 
-    public void setTags(ArrayList<String> tags) {
+    /**
+     * Sets the list of tags filter.
+     *
+     * @param tags The new list of tags filter.
+     */
+    public void setTags(final ArrayList<String> tags) {
         this.tags = tags;
     }
 
+    /**
+     * Gets the lyrics filter.
+     *
+     * @return The lyrics filter.
+     */
     public String getLyrics() {
         return lyrics;
     }
 
-    public void setLyrics(String lyrics) {
+    /**
+     * Sets the lyrics filter.
+     *
+     * @param lyrics The new lyrics filter.
+     */
+    public void setLyrics(final String lyrics) {
         this.lyrics = lyrics;
     }
 
+    /**
+     * Gets the genre filter.
+     *
+     * @return The genre filter.
+     */
     public String getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    /**
+     * Sets the genre filter.
+     *
+     * @param genre The new genre filter.
+     */
+    public void setGenre(final String genre) {
         this.genre = genre;
     }
 
+    /**
+     * Gets the release year filter.
+     *
+     * @return The release year filter.
+     */
     public String getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(String releaseYear) {
+    /**
+     * Sets the release year filter.
+     *
+     * @param releaseYear The new release year filter.
+     */
+    public void setReleaseYear(final String releaseYear) {
         this.releaseYear = releaseYear;
     }
 
+    /**
+     * Gets the artist filter.
+     *
+     * @return The artist filter.
+     */
     public String getArtist() {
         return artist;
     }
 
-    public void setArtist(String artist) {
+    /**
+     * Sets the artist filter.
+     *
+     * @param artist The new artist filter.
+     */
+    public void setArtist(final String artist) {
         this.artist = artist;
     }
 
+    /**
+     * Gets the owner filter.
+     *
+     * @return The owner filter.
+     */
     public String getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    /**
+     * Sets the owner filter.
+     *
+     * @param owner The new owner filter.
+     */
+    public void setOwner(final String owner) {
         this.owner = owner;
     }
 
+    /**
+     * Gets the followers filter.
+     *
+     * @return The followers filter.
+     */
     public String getFollowers() {
         return followers;
     }
 
-    public void setFollowers(String followers) {
+    /**
+     * Sets the followers filter.
+     *
+     * @param followers The new followers filter.
+     */
+    public void setFollowers(final String followers) {
         this.followers = followers;
     }
 
+    /**
+     * Gets the description filter.
+     *
+     * @return The description filter.
+     */
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    /**
+     * Sets the description filter.
+     *
+     * @param description The new description filter.
+     */
+    public void setDescription(final String description) {
         this.description = description;
     }
 
+    /**
+     * Returns a string representation of the FiltersInput object.
+     *
+     * @return A string representation of the FiltersInput object.
+     *
+     */
     @Override
     public String toString() {
-        return "FilterInput{" +
-                ", name='" + name + '\'' +
-                ", album='" + album + '\'' +
-                ", tags=" + tags +
-                ", lyrics='" + lyrics + '\'' +
-                ", genre='" + genre + '\'' +
-                ", releaseYear='" + releaseYear + '\'' +
-                ", artist='" + artist + '\'' +
-                ", owner='" + owner + '\'' +
-                ", followers='" + followers + '\'' +
-                '}';
+        return "FilterInput{"
+                + ", name='" + name + '\''
+                + ", album='" + album + '\''
+                + ", tags=" + tags
+                + ", lyrics='" + lyrics + '\''
+                + ", genre='" + genre + '\''
+                + ", releaseYear='" + releaseYear + '\''
+                + ", artist='" + artist + '\''
+                + ", owner='" + owner + '\''
+                + ", followers='" + followers + '\''
+                + '}';
     }
 }

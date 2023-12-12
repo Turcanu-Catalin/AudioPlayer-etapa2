@@ -7,10 +7,18 @@ import lombok.Getter;
 public abstract class AudioFile extends LibraryEntry {
     private final Integer duration;
 
-    public AudioFile(String name, Integer duration) {
+    public AudioFile(final String name, final Integer duration) {
         super(name);
         this.duration = duration;
     }
 
-    public boolean isSong(){return false;}
+    /**
+     * Indicates whether the current audio file represents a song.
+     *
+     * @return False, as this class is not a song.
+     */
+    public boolean isSong() {
+        return false;
+    }
+
 }

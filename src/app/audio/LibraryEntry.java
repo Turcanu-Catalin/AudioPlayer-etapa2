@@ -8,27 +8,130 @@ import java.util.ArrayList;
 public abstract class LibraryEntry {
     private final String name;
 
-    public LibraryEntry(String name) {
+    /**
+     * Instantiates a new Library entry.
+     *
+     * @param name the name
+     */
+    public LibraryEntry(final String name) {
         this.name = name;
     }
 
-    public boolean matchesName(String name) {
-        return getName().toLowerCase().startsWith(name.toLowerCase());
+    /**
+     * Matches name boolean.
+     *
+     * @param nameFilter the name
+     * @return the boolean
+     */
+    public boolean matchesName(final String nameFilter) {
+        return getName().toLowerCase().startsWith(nameFilter.toLowerCase());
     }
-    public boolean matchesAlbum(String album) { return false; }
-    public boolean matchesTags(ArrayList<String> tags) { return false; }
-    public boolean matchesLyrics(String lyrics) { return false; }
-    public boolean matchesGenre(String genre) { return false; }
-    public boolean matchesArtist(String artist) { return false; }
-    public boolean matchesReleaseYear(String releaseYear) { return false; }
-    public boolean matchesOwner(String user) { return false; }
-    public boolean isVisibleToUser(String user) { return false; }
-    public boolean matchesFollowers(String followers) { return false; }
-    public boolean matchesDescription(String description) { return false; }
 
-
-    public boolean isArtistEntry(){
+    /**
+     * Matches album boolean.
+     *
+     * @param album the album
+     * @return the boolean
+     */
+    public boolean matchesAlbum(final String album) {
         return false;
     }
-    public boolean isHostEntry(){return false;}
+
+    /**
+     * Matches tags boolean.
+     *
+     * @param tags the tags
+     * @return the boolean
+     */
+    public boolean matchesTags(final ArrayList<String> tags) {
+        return false;
+    }
+
+    /**
+     * Matches lyrics boolean.
+     *
+     * @param lyrics the lyrics
+     * @return the boolean
+     */
+    public boolean matchesLyrics(final String lyrics) {
+        return false;
+    }
+
+    /**
+     * Matches genre boolean.
+     *
+     * @param genre the genre
+     * @return the boolean
+     */
+    public boolean matchesGenre(final String genre) {
+        return false;
+    }
+
+    /**
+     * Matches artist boolean.
+     *
+     * @param artist the artist
+     * @return the boolean
+     */
+    public boolean matchesArtist(final String artist) {
+        return false;
+    }
+
+    /**
+     * Matches release year boolean.
+     *
+     * @param releaseYear the release year
+     * @return the boolean
+     */
+    public boolean matchesReleaseYear(final String releaseYear) {
+        return false;
+    }
+
+    /**
+     * Matches owner boolean.
+     *
+     * @param user the user
+     * @return the boolean
+     */
+    public boolean matchesOwner(final String user) {
+        return false;
+    }
+
+    /**
+     * Is visible to user boolean.
+     *
+     * @param user the user
+     * @return the boolean
+     */
+    public boolean isVisibleToUser(final String user) {
+        return false;
+    }
+
+    /**
+     * Matches followers boolean.
+     *
+     * @param followers the followers
+     * @return the boolean
+     */
+    public boolean matchesFollowers(final String followers) {
+        return false;
+    }
+
+    /**
+     * Indicates whether the current library entry represents an artist.
+     *
+     * @return False, as this class is not designed to represent an artist entry.
+     */
+    public boolean isArtistEntry() {
+        return false;
+    }
+
+    /**
+     * Indicates whether the current library entry represents a host.
+     *
+     * @return False, as this class is not designed to represent a host entry.
+     */
+    public boolean isHostEntry() {
+        return false;
+    }
 }

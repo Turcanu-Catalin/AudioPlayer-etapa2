@@ -2,11 +2,9 @@ package app.utils;
 
 import app.audio.Collections.Album;
 import app.audio.LibraryEntry;
-import app.user.Artist;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ArtistsEntry extends LibraryEntry {
     @Getter
@@ -22,7 +20,9 @@ public class ArtistsEntry extends LibraryEntry {
     @Getter
     private ArrayList<Merch> merches;
 
-    public ArtistsEntry(String artistName, int age, String city, ArrayList<Album> albums, ArrayList<Event> events, ArrayList<Merch> merches) {
+    public ArtistsEntry(final String artistName, final int age,
+                        final String city, final ArrayList<Album> albums,
+                        final ArrayList<Event> events, final ArrayList<Merch> merches) {
         super(artistName);
         this.artistName = artistName;
         this.age = age;
@@ -32,8 +32,13 @@ public class ArtistsEntry extends LibraryEntry {
         this.merches = merches;
     }
 
+    /**
+     * Indicates whether this entry represents an artist.
+     *
+     * @return true since this entry represents an artist.
+     */
     @Override
-    public boolean isArtistEntry(){
+    public boolean isArtistEntry() {
         return true;
     }
 }

@@ -1,30 +1,20 @@
 package fileio.input;
 
-import app.audio.Files.Episode;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public final class PodcastInput {
     private String name;
     private String owner;
-    private List<EpisodeInput> episodes;
+    private ArrayList<EpisodeInput> episodes;
 
-    public PodcastInput(){
-
-    }
-
-    public PodcastInput(String name, String owner, List<EpisodeInput> episodes) {
-        this.name = name;
-        this.owner = owner;
-        this.episodes = episodes;
+    public PodcastInput() {
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -32,25 +22,24 @@ public final class PodcastInput {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(final String owner) {
         this.owner = owner;
     }
 
-
-    public List<EpisodeInput> getEpisodes() {
+    public ArrayList<EpisodeInput> getEpisodes() {
         return episodes;
     }
 
-    public void setEpisodes(List<EpisodeInput> episodes) {
+    public void setEpisodes(final ArrayList<EpisodeInput> episodes) {
         this.episodes = episodes;
     }
 
     @Override
     public String toString() {
-        return "PodcastInput{" +
-                "name='" + name + '\'' +
-                ", owner='" + owner + '\'' +
-                ", episodes=" + episodes +
-                '}';
+        return "PodcastInput{"
+                + "name='" + name + '\''
+                + ", owner='" + owner + '\''
+                + ", episodes=" + episodes
+                + '}';
     }
 }

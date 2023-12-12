@@ -20,7 +20,9 @@ public class HostEntry extends LibraryEntry {
 
 
 
-    public HostEntry(String hostName, int age, String city, ArrayList<Podcast> podcasts, ArrayList<Announcement> announcements) {
+    public HostEntry(final String hostName, final int age, final String city,
+                     final ArrayList<Podcast> podcasts,
+                     final ArrayList<Announcement> announcements) {
         super(hostName);
         this.hostName = hostName;
         this.age = age;
@@ -29,8 +31,11 @@ public class HostEntry extends LibraryEntry {
         this.announcements = announcements;
     }
 
+    /**
+     * This class represents a host entry, indicating that the user is a host.
+     */
     @Override
-    public boolean isHostEntry(){
+    public boolean isHostEntry() {
         return true;
     }
 }
